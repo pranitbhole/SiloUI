@@ -1,0 +1,75 @@
+.glow-btn {
+  position: relative;
+  padding: 14px 32px;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+/* Shared glow layer */
+.glow-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 40px;
+  filter: blur(18px);
+  opacity: 0.6;
+  transition: 0.3s ease;
+  z-index: -1;
+}
+
+/* Hover animation */
+.glow-btn:hover {
+  transform: translateY(-2px);
+}
+
+.glow-btn:hover::before {
+  opacity: 0.9;
+  filter: blur(25px);
+}
+
+/* Content */
+.glow-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.arrow {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* ---------------- Variants ---------------- */
+
+/* ORANGE */
+.glow-btn.orange {
+  background: linear-gradient(135deg, #f08a3c, #de732c);
+}
+
+.glow-btn.orange::before {
+  background: #de732c;
+}
+
+/* BLUE */
+.glow-btn.blue {
+  background: linear-gradient(135deg, #3d8bff, #126fff);
+}
+
+.glow-btn.blue::before {
+  background: #126fff;
+}
+
+/* GREEN */
+.glow-btn.green {
+  background: linear-gradient(135deg, #2a8f55, #176635);
+}
+
+.glow-btn.green::before {
+  background: #176635;
+}

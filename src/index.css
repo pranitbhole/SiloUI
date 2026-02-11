@@ -1,0 +1,27 @@
+/* Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Industrial Dark Theme */
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #0f1115;   /* deep dark */
+  color: #e5e5e5;              /* light text */
+  background: radial-gradient(circle at center, #11151d, #0b0e13);
+
+}
+
+/* Utility container */
+.container {
+  padding: 60px;
+}
+
+/* Accent color */
+:root {
+  --accent: #4caf50;   /* nuclear green */
+  --card-bg: #1a1d24;  /* dark grey */
+  --border-color: #2a2f3a;
+}

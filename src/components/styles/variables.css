@@ -1,0 +1,8 @@
+:root {
+  --reactor-orange: #de732c;
+  --reactor-blue: #126fff;
+  --reactor-green: #176635;
+
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.12);
+}

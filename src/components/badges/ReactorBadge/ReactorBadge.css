@@ -1,0 +1,189 @@
+.reactor-badge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  overflow: hidden;
+  cursor: pointer;
+  user-select: none;
+
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.04);
+
+  transition: transform 0.2s ease;
+}
+
+/* SIZE */
+.sm { font-size: 11px; padding: 5px 12px; }
+.md { font-size: 13px; padding: 7px 16px; }
+.lg { font-size: 15px; padding: 10px 22px; }
+
+/* DOT */
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 calc(10px * var(--glow)) currentColor;
+}
+
+/* TEXT */
+.badge-text {
+  color: white;
+  text-shadow: 0 0 calc(6px * var(--glow)) currentColor;
+}
+
+/* ICON */
+.badge-icon {
+  font-size: 1em;
+}
+
+/* LOADER */
+.loader {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* STATUS COLORS */
+.success { color: #00ff9d; }
+.warning { color: #ffb800; }
+.danger  { color: #ff3c3c; }
+.default { color: #aaa; }
+
+/* DOT BASE */
+.badge-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 calc(6px * var(--glow)) currentColor;
+  transition: box-shadow 0.3s ease;
+}
+
+/* DOT PULSE */
+.dot-pulse {
+  animation: dotPulse 3s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0% {
+    box-shadow:
+      0 0 calc(6px * var(--glow)) currentColor,
+      0 0 0 0 rgba(255, 60, 60, 0.4);
+  }
+
+  50% {
+    box-shadow:
+      0 0 calc(12px * var(--glow) * var(--pulse-strength)) currentColor,
+      0 0 calc(12px * var(--pulse-strength)) rgba(255, 60, 60, 0.25);
+  }
+
+  100% {
+    box-shadow:
+      0 0 calc(6px * var(--glow)) currentColor,
+      0 0 0 0 rgba(255, 60, 60, 0.4);
+  }
+}
+
+
+@keyframes pulseDanger {
+  0% {
+    box-shadow: 0 0 6px rgba(255,60,60,0.3);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255,60,60,0.55);
+  }
+  100% {
+    box-shadow: 0 0 6px rgba(255,60,60,0.3);
+  }
+}
+
+/* GRADIENT ANIMATED BORDER */
+.animated-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  padding: 1px;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    currentColor,
+    transparent
+  );
+  background-size: 200% 200%;
+  animation: borderMove 3s linear infinite;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+}
+
+@keyframes borderMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* SHIMMER SWEEP */
+.reactor-badge::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: 0.6s;
+}
+
+.reactor-badge:hover::after {
+  left: 150%;
+}
+
+/* RIPPLE */
+.ripple {
+  position: absolute;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: rippleEffect 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes rippleEffect {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* GLASS NOISE */
+.glass-noise {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background-image: radial-gradient(
+    rgba(255,255,255,0.05) 1px,
+    transparent 1px
+  );
+  background-size: 3px 3px;
+  opacity: 0.2;
+  pointer-events: none;
+}

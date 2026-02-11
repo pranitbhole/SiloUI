@@ -1,0 +1,148 @@
+.reactor-btn {
+  position: relative;
+  padding: 18px 40px;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  overflow: hidden;
+  transition: 0.3s ease;
+
+  /* GLASS EFFECT */
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    inset 0 0 8px rgba(255,255,255,0.1),
+    0 0 15px rgba(0,0,0,0.4);
+}
+
+/* Glass shine overlay */
+.reactor-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.4),
+    rgba(255,255,255,0.05)
+  );
+  transform: skewX(-20deg);
+  transition: 0.5s;
+}
+
+.reactor-btn:hover::after {
+  left: 120%;
+}
+
+/* Core Glow */
+.reactor-core {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.5;
+  transition: 0.3s ease;
+  z-index: 0;
+}
+
+/* Rotating Ring */
+.reactor-ring {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50px;
+  border: 2px solid transparent;
+  animation: rotateRing 6s linear infinite;
+}
+
+/* Text */
+.reactor-text {
+  position: relative;
+  z-index: 2;
+
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255,255,255,0.9),
+    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.9)
+  );
+
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  text-shadow:
+    0 0 6px rgba(255,255,255,0.4),
+    0 0 12px rgba(255,255,255,0.2);
+
+  transition: 0.3s ease;
+}
+.reactor-btn:hover .reactor-text {
+  text-shadow:
+    0 0 10px rgba(255,255,255,0.6),
+    0 0 18px rgba(255,255,255,0.3);
+}
+
+
+/* Hover */
+.reactor-btn:hover {
+  box-shadow:
+    inset 0 0 12px rgba(255,255,255,0.15),
+    0 0 25px rgba(255,255,255,0.08);
+}
+
+
+.reactor-btn:hover .reactor-core {
+  opacity: 0.9;
+}
+
+.reactor-btn:active {
+  transform: scale(0.97);
+}
+
+/* -------- Variants -------- */
+
+.reactor-btn.orange .reactor-core {
+  background: #de732c;
+}
+
+.reactor-btn.orange .reactor-ring {
+  border-color: #de732c;
+}
+
+.reactor-btn.blue .reactor-core {
+  background: #126fff;
+}
+
+.reactor-btn.blue .reactor-ring {
+  border-color: #126fff;
+}
+
+.reactor-btn.green .reactor-core {
+  background: #176635;
+}
+
+.reactor-btn.green .reactor-ring {
+  border-color: #176635;
+}
+
+/* Ring animation */
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

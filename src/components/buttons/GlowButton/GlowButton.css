@@ -1,75 +1,162 @@
-.glow-btn {
+/* ===============================
+   OUTER WRAPPER
+================================== */
+.glow-wrapper {
   position: relative;
-  padding: 14px 32px;
-  border-radius: 40px;
+  padding: 2px;
+  border-radius: 999px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  transition: all 0.3s ease;
-  overflow: hidden;
+  background: linear-gradient(
+    120deg,
+    #5f5fff,
+    #ff6ec4,
+    #ffa94d,
+    #5f5fff
+  );
+  background-size: 300% 300%;
+  animation: borderFlow 10s linear infinite;
+  display: inline-block;
+  transition: transform 0.2s ease;
 }
 
-/* Shared glow layer */
-.glow-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 40px;
-  filter: blur(18px);
+.glow-wrapper:hover {
+  transform: translateY(0px);
+}
+
+/* Disable */
+.glow-wrapper.disabled {
   opacity: 0.6;
-  transition: 0.3s ease;
+  cursor: not-allowed;
+}
+
+/* Gradient motion */
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ===============================
+   AMBIENT HOVER GLOW
+================================== */
+.ambient-glow {
+  position: absolute;
+  inset: -20px;
+  border-radius: 999px;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 120, 80, 0.25),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
   z-index: -1;
+  filter: blur(30px);
 }
 
-/* Hover animation */
-.glow-btn:hover {
-  transform: translateY(-2px);
+.glow-wrapper:hover .ambient-glow {
+  opacity: 1;
 }
 
-.glow-btn:hover::before {
-  opacity: 0.9;
-  filter: blur(25px);
-}
-
-/* Content */
-.glow-content {
+/* ===============================
+   INNER CORE
+================================== */
+.glow-inner {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: #0b0b0b;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  overflow: hidden;
+  transition:
+    transform 0.15s ease,
+    background 0.3s ease,
+    box-shadow 0.25s ease;
 }
 
+/* subtle inner rim */
+.glow-inner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.05);
+  pointer-events: none;
+}
+
+/* Hover surface lift */
+.glow-wrapper:hover .glow-inner {
+  background: #111;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.06),
+    0 10px 25px rgba(0,0,0,0.4);
+}
+
+/* Press */
+.glow-inner.pressed {
+  transform: scale(0.96);
+  box-shadow:
+    inset 0 6px 16px rgba(0,0,0,0.7);
+}
+
+/* ===============================
+   TEXT
+================================== */
+.label {
+  letter-spacing: 0.4px;
+}
+
+/* Arrow */
 .arrow {
-  font-size: 14px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
   opacity: 0.8;
 }
 
-/* ---------------- Variants ---------------- */
-
-/* ORANGE */
-.glow-btn.orange {
-  background: linear-gradient(135deg, #f08a3c, #de732c);
+.glow-wrapper:hover .arrow {
+  transform: translateX(5px);
 }
 
-.glow-btn.orange::before {
-  background: #de732c;
+/* ===============================
+   LOADING SPINNER
+================================== */
+.spinner {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top: 2px solid white;
+  animation: spin 0.6s linear infinite;
 }
 
-/* BLUE */
-.glow-btn.blue {
-  background: linear-gradient(135deg, #3d8bff, #126fff);
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
-.glow-btn.blue::before {
-  background: #126fff;
+/* ===============================
+   GLASS REFLECTION
+================================== */
+.reflection {
+  position: absolute;
+  top: -50%;
+  left: -30%;
+  width: 60%;
+  height: 200%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.15),
+    transparent
+  );
+  transform: rotate(25deg) translateX(-200%);
+  transition: transform 0.8s ease;
+  pointer-events: none;
 }
 
-/* GREEN */
-.glow-btn.green {
-  background: linear-gradient(135deg, #2a8f55, #176635);
-}
-
-.glow-btn.green::before {
-  background: #176635;
+.glow-wrapper:hover .reflection {
+  transform: rotate(25deg) translateX(250%);
 }

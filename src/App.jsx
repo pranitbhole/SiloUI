@@ -1,26 +1,28 @@
-import ReactorBadgeDemo from "./components/badges/ReactorBadge/ReactorBadgeDemo";
-import ReactorButtonDemo from "./components/buttons/ReactorButton/ReactorButton";
-import { ReactorToggle } from "./index";
+import TacticalHexBadge from "./components/badges/TacticalHexBadge";
 
 function App() {
   return (
-    <div>
-      <ReactorToggle
-  label="Reactor System"
-  size="md"
-  glowIntensity={1.2}
-  onChange={(state) => console.log("State:", state)}
-/>
+    <div
+      style={{
+        background: "#0b0f14",
+        minHeight: "100vh",
+        display: "flex",
+        gap: "40px",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <TacticalHexBadge
+        label="REACTOR A"
+        status="STABLE"
+        variant="safe"
+        details="Core temperature holding at 640°C. No anomalies detected."
+        pulse
+      />
 
-<ReactorToggle
-  label="Emergency Mode"
-  size="lg"
-  defaultChecked
-  glowIntensity={1.6}
-/>
+      
     </div>
-  )
-  
+  );
 }
 
-export default App
+export default App;

@@ -1,0 +1,165 @@
+.weapon-panel {
+  width: 920px;
+  padding: 30px;
+  border-radius: 16px;
+  background: linear-gradient(145deg, #1b2229, #0f1419);
+  box-shadow:
+    0 40px 100px rgba(0,0,0,0.9),
+    inset 0 0 40px rgba(255,255,255,0.02);
+  color: #e4e9ef;
+  font-family: "Orbitron", sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ambient flicker */
+.weapon-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(transparent 60%, rgba(255,255,255,0.02));
+  animation: flicker 8s infinite;
+  pointer-events: none;
+}
+
+@keyframes flicker {
+  0%, 100% { opacity: 0.1; }
+  50% { opacity: 0.2; }
+}
+
+/* HEADER */
+
+.weapon-header h2 {
+  font-size: 20px;
+  letter-spacing: 2px;
+}
+
+.weapon-sub {
+  font-size: 11px;
+  opacity: 0.6;
+  letter-spacing: 1px;
+}
+
+/* GRID */
+
+.module-grid {
+  display: flex;
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.module-card {
+  width: 180px;
+  height: 120px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #2a3138, #161c21);
+  border: 1px solid rgba(255,255,255,0.05);
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 0.3s ease;
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.7);
+}
+
+.module-card:hover {
+  box-shadow:
+    0 25px 60px rgba(0,150,255,0.25);
+}
+
+.module-card.active {
+  border: 1px solid rgba(0,180,255,0.4);
+  box-shadow:
+    0 0 40px rgba(0,180,255,0.4);
+}
+
+/* Glass layer */
+.module-glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg,
+    rgba(255,255,255,0.06),
+    rgba(255,255,255,0.01));
+  backdrop-filter: blur(10px);
+}
+
+/* Content */
+.module-content {
+  position: relative;
+  padding: 16px;
+  z-index: 2;
+}
+
+.module-title {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.module-type {
+  font-size: 11px;
+  opacity: 0.6;
+}
+
+/* LED */
+.module-led {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #0af;
+  box-shadow: 0 0 12px #0af;
+  opacity: 0;
+  transition: 0.3s ease;
+}
+
+.module-card.active .module-led {
+  opacity: 1;
+}
+
+/* STATS PANEL */
+
+.stats-panel {
+  margin-top: 40px;
+  background: linear-gradient(145deg, #141a20, #0e1317);
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.7);
+}
+
+.stat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  gap: 15px;
+}
+
+.stat-label {
+  width: 120px;
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.stat-bar {
+  flex: 1;
+  height: 10px;
+  background: #0d1116;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+.stat-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00b4ff, #0078ff);
+  box-shadow:
+    0 0 12px rgba(0,180,255,0.6);
+}
+
+.stat-value {
+  width: 40px;
+  text-align: right;
+  font-size: 12px;
+}

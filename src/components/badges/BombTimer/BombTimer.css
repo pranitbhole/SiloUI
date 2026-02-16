@@ -1,0 +1,260 @@
+/* ================= BOARD ================= */
+
+.bomb-board {
+  position: relative;
+  width: 560px;
+  height: 190px;
+  border-radius: 14px;
+
+  /* PCB realistic gradient */
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255,255,255,0.06), transparent 40%),
+    linear-gradient(145deg, #1f6b34 0%, #14512a 40%, #0f3d1f 100%);
+
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.9),
+    inset 0 3px 6px rgba(255,255,255,0.05),
+    inset 0 -6px 12px rgba(0,0,0,0.6);
+
+  padding: 35px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Subtle PCB texture */
+.bomb-board::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ================= SCREWS ================= */
+
+.bomb-board::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 15px 15px, #444 3px, transparent 4px),
+    radial-gradient(circle at calc(100% - 15px) 15px, #444 3px, transparent 4px),
+    radial-gradient(circle at 15px calc(100% - 15px), #444 3px, transparent 4px),
+    radial-gradient(circle at calc(100% - 15px) calc(100% - 15px), #444 3px, transparent 4px);
+}
+
+/* ================= WIRES ================= */
+
+.wires {
+  position: absolute;
+  top: -35px;
+  left: 60px;
+  display: flex;
+  gap: 25px;
+}
+
+.wire {
+  width: 6px;
+  height: 45px;
+  border-radius: 4px;
+  box-shadow: inset 0 -4px 6px rgba(0,0,0,0.5);
+}
+
+.wire.red { background: linear-gradient(#ff4d4d, #990000); }
+.wire.blue { background: linear-gradient(#4da6ff, #003d99); }
+.wire.yellow { background: linear-gradient(#ffe066, #b38f00); }
+
+/* ================= LCD FRAME ================= */
+
+.lcd-container {
+  position: relative;
+  padding: 16px;
+  border-radius: 8px;
+
+  background:
+    linear-gradient(145deg, #1d2a1f, #0f1712);
+
+  box-shadow:
+    inset 0 4px 6px rgba(255,255,255,0.04),
+    inset 0 -6px 10px rgba(0,0,0,0.9),
+    0 10px 20px rgba(0,0,0,0.6);
+}
+
+/* Raised LCD Glass */
+
+.lcd-screen {
+  width: 400px;
+  height: 90px;
+  border-radius: 6px;
+
+  background:
+    linear-gradient(180deg, #2e3b2f 0%, #1a241b 100%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+
+  box-shadow:
+    inset 0 0 25px rgba(0,0,0,0.9),
+    inset 0 4px 6px rgba(255,255,255,0.03),
+    0 6px 15px rgba(0,0,0,0.6);
+}
+
+/* Glass shine layer */
+
+.lcd-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      120deg,
+      rgba(255,255,255,0.15) 0%,
+      rgba(255,255,255,0.05) 20%,
+      transparent 40%
+    );
+  transform: translateX(-100%);
+  animation: glassSweep 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes glassSweep {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(120%); }
+}
+
+/* ================= DIGITS ================= */
+
+.lcd-digits {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.digit {
+  position: relative;
+  width: 42px;
+  height: 75px;
+}
+
+.segment {
+  position: absolute;
+  background: #0d2a14;
+  transition: 0.08s ease;
+}
+
+.segment.on {
+  background: #8cff72;
+  box-shadow:
+    0 0 6px #8cff72,
+    0 0 12px rgba(140,255,114,0.6);
+}
+
+/* Horizontal */
+.segment.a { top: 0; left: 8px; width: 26px; height: 6px; }
+.segment.d { bottom: 0; left: 8px; width: 26px; height: 6px; }
+.segment.g { top: 34px; left: 8px; width: 26px; height: 6px; }
+
+/* Vertical */
+.segment.f { top: 6px; left: 0; width: 6px; height: 28px; }
+.segment.b { top: 6px; right: 0; width: 6px; height: 28px; }
+.segment.e { bottom: 6px; left: 0; width: 6px; height: 28px; }
+.segment.c { bottom: 6px; right: 0; width: 6px; height: 28px; }
+
+.colon {
+  font-size: 42px;
+  color: #8cff72;
+  text-shadow: 0 0 8px #8cff72;
+}
+
+/* ================= DUST / GRIME ================= */
+
+.lcd-noise {
+  position: absolute;
+  inset: 0;
+  background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+/* ================= STATES ================= */
+
+.bomb-board.warning .segment.on {
+  background: #ffb347;
+  box-shadow: 0 0 10px #ff9900;
+}
+
+.bomb-board.critical .segment.on {
+  background: #ff3b3b;
+  box-shadow: 0 0 15px #ff0000;
+}
+
+.bomb-board.critical {
+  animation: shake 0.12s infinite;
+}
+
+@keyframes shake {
+  0% { transform: translate(0); }
+  25% { transform: translate(-2px, 1px); }
+  50% { transform: translate(2px, -1px); }
+  75% { transform: translate(-1px, 2px); }
+  100% { transform: translate(1px, -2px); }
+}
+
+/* ================= EXPLOSION ================= */
+
+.explosion-flash {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, white 0%, #ffccaa 40%, transparent 70%);
+  animation: explode 0.5s forwards;
+  z-index: 50;
+}
+
+@keyframes explode {
+  0% { opacity: 0; transform: scale(0.8); }
+  30% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0; transform: scale(1.4); }
+}
+
+/* ================= BUTTON BUMPS ================= */
+
+.side-bumps {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bump {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+
+  background:
+    radial-gradient(circle at 35% 35%, #666, #222);
+
+  box-shadow:
+    inset 0 4px 6px rgba(0,0,0,0.9),
+    0 3px 6px rgba(0,0,0,0.6);
+
+  transition: transform 0.1s ease;
+}
+
+.bump:active {
+  transform: translateY(2px);
+}

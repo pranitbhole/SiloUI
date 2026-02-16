@@ -1,26 +1,26 @@
-import TacticalHexBadge from "./components/badges/TacticalHexBadge";
+import RadialCommandMenu from "./components/menu/RadialCommandMenu";
 
 function App() {
   return (
     <div
       style={{
-        background: "#0b0f14",
-        minHeight: "100vh",
+        height: "100vh",
+        background: "#0b1117",
         display: "flex",
-        gap: "40px",
         alignItems: "center",
         justifyContent: "center",
       }}
     >
-      <TacticalHexBadge
-        label="REACTOR A"
-        status="STABLE"
-        variant="safe"
-        details="Core temperature holding at 640°C. No anomalies detected."
-        pulse
+      <RadialCommandMenu
+        items={[
+          { label: "PISTOLS" },
+          { label: "SMGS" },
+          { label: "RIFLES" },
+          { label: "HEAVY" },
+          { label: "GEAR" },
+          { label: "GRENADES" },
+        ]}
       />
-
-      
     </div>
   );
 }

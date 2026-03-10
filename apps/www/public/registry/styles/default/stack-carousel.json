@@ -1,0 +1,20 @@
+{
+  "name": "stack-carousel",
+  "type": "components:ui",
+  "category": "cards",
+  "description": "Stacked card carousel",
+  "dependencies": [
+    "framer-motion"
+  ],
+  "devDependencies": [],
+  "files": [
+    {
+      "name": "StackCarousel.jsx",
+      "content": "import { useState, useEffect } from \"react\";\r\nimport { motion } from \"framer-motion\";\r\nimport \"./StackCarousel.css\";\r\n\r\nfunction StackCarousel({\r\n  cards = [],\r\n  autoPlay = true,\r\n  interval = 3000,\r\n}) {\r\n  const [stack, setStack] = useState(cards);\r\n  const [isHovered, setIsHovered] = useState(false);\r\n\r\n  useEffect(() => {\r\n    if (!autoPlay || isHovered) return;\r\n\r\n    const timer = setInterval(() => {\r\n      rotateStack();\r\n    }, interval);\r\n\r\n    return () => clearInterval(timer);\r\n  }, [stack, autoPlay, isHovered]);\r\n\r\n  const rotateStack = () => {\r\n    setStack((prev) => {\r\n      const updated = [...prev];\r\n      const first = updated.shift();\r\n      updated.push(first);\r\n      return updated;\r\n    });\r\n  };\r\n\r\n  return (\r\n    <div\r\n      className=\"stack-container\"\r\n      onMouseEnter={() => setIsHovered(true)}\r\n      onMouseLeave={() => setIsHovered(false)}\r\n    >\r\n      {stack.map((card, index) => (\r\n        <motion.div\r\n          key={card.id}\r\n          className={`stack-card ${card.variant || \"\"}`}\r\n          drag={index === 0 ? \"x\" : false}\r\n          dragConstraints={{ left: 0, right: 0 }}\r\n          onDragEnd={(e, info) => {\r\n            if (info.offset.x < -80) rotateStack();\r\n          }}\r\n          whileHover={\r\n            index === 0\r\n              ? { scale: 1.02, y: -4 }\r\n              : {}\r\n          }\r\n          animate={{\r\n            y: index * 14,\r\n            scale: 1 - index * 0.05,\r\n            opacity: index > 4 ? 0 : 1,\r\n          }}\r\n          transition={{\r\n            type: \"spring\",\r\n            stiffness: 220,\r\n            damping: 22,\r\n          }}\r\n          style={{\r\n            zIndex: stack.length - index,\r\n          }}\r\n        >\r\n          {card.content}\r\n        </motion.div>\r\n      ))}\r\n    </div>\r\n  );\r\n}\r\n\r\nexport default StackCarousel;\r\n"
+    },
+    {
+      "name": "StackCarousel.css",
+      "content": ".stack-container {\r\n  position: relative;\r\n  width: 380px;\r\n  height: 240px;\r\n}\r\n\r\n/* Base Card */\r\n\r\n.stack-card {\r\n  position: absolute;\r\n  width: 100%;\r\n  height: 200px;\r\n  border-radius: 18px;\r\n  padding: 20px;\r\n  backdrop-filter: blur(14px);\r\n  background: rgba(15, 20, 25, 0.8);\r\n  box-shadow:\r\n    0 20px 50px rgba(0, 0, 0, 0.6),\r\n    inset 0 0 0 1px rgba(255, 255, 255, 0.06);\r\n  color: #e4e7eb;\r\n  display: flex;\r\n  flex-direction: column;\r\n  justify-content: space-between;\r\n  overflow: hidden;\r\n  cursor: grab;\r\n}\r\n\r\n.stack-card:active {\r\n  cursor: grabbing;\r\n}\r\n\r\n/* Glass edge highlight */\r\n\r\n.stack-card::after {\r\n  content: \"\";\r\n  position: absolute;\r\n  inset: 0;\r\n  border-radius: 18px;\r\n  background: linear-gradient(\r\n    120deg,\r\n    rgba(255, 255, 255, 0.12),\r\n    transparent 40%\r\n  );\r\n  opacity: 0.15;\r\n  pointer-events: none;\r\n}\r\n\r\n/* Original Rich Color Variants */\r\n\r\n.stack-card.blue {\r\n  background: linear-gradient(\r\n    135deg,\r\n    rgba(40, 80, 180, 0.6),\r\n    rgba(10, 20, 40, 0.9)\r\n  );\r\n}\r\n\r\n.stack-card.green {\r\n  background: linear-gradient(\r\n    135deg,\r\n    rgba(40, 180, 120, 0.6),\r\n    rgba(10, 25, 20, 0.9)\r\n  );\r\n}\r\n\r\n.stack-card.orange {\r\n  background: linear-gradient(\r\n    135deg,\r\n    rgba(255, 140, 80, 0.6),\r\n    rgba(30, 15, 10, 0.9)\r\n  );\r\n}\r\n"
+    }
+  ]
+}

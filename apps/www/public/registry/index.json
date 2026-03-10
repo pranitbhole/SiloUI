@@ -1,0 +1,80 @@
+[
+  {
+    "name": "glow-button",
+    "type": "components:ui",
+    "category": "buttons",
+    "description": "Button with animated glow effect"
+  },
+  {
+    "name": "reactor-button",
+    "type": "components:ui",
+    "category": "buttons",
+    "description": "Button with reactor-style animation"
+  },
+  {
+    "name": "bomb-timer",
+    "type": "components:ui",
+    "category": "badges",
+    "description": "Countdown timer badge with bomb animation"
+  },
+  {
+    "name": "reactor-badge",
+    "type": "components:ui",
+    "category": "badges",
+    "description": "Reactor-styled badge"
+  },
+  {
+    "name": "status-badge",
+    "type": "components:ui",
+    "category": "badges",
+    "description": "Status indicator badge"
+  },
+  {
+    "name": "tactical-hex-badge",
+    "type": "components:ui",
+    "category": "badges",
+    "description": "Hexagonal tactical badge"
+  },
+  {
+    "name": "reactor-card",
+    "type": "components:ui",
+    "category": "cards",
+    "description": "Card with reactor animation"
+  },
+  {
+    "name": "stack-carousel",
+    "type": "components:ui",
+    "category": "cards",
+    "description": "Stacked card carousel"
+  },
+  {
+    "name": "radial-command-menu",
+    "type": "components:ui",
+    "category": "menus",
+    "description": "Radial command menu"
+  },
+  {
+    "name": "core-console",
+    "type": "components:ui",
+    "category": "panels",
+    "description": "Core console panel"
+  },
+  {
+    "name": "weapon-module-panel",
+    "type": "components:ui",
+    "category": "panels",
+    "description": "Weapon module control panel"
+  },
+  {
+    "name": "control-slider",
+    "type": "components:ui",
+    "category": "sliders",
+    "description": "Futuristic control slider"
+  },
+  {
+    "name": "reactor-toggle",
+    "type": "components:ui",
+    "category": "toggles",
+    "description": "Reactor-style toggle switch"
+  }
+]

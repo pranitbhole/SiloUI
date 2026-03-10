@@ -1,0 +1,206 @@
+.nuke-room {
+  background: #0b0f12;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.console-panel {
+  width: 1000px;
+  padding: 60px;
+  background: #2b2f34;
+  border: 3px solid #1a1d20;
+  box-shadow:
+    inset 0 2px 4px rgba(255,255,255,0.04),
+    inset 0 -4px 8px rgba(0,0,0,0.8),
+    0 40px 80px rgba(0,0,0,0.8);
+  position: relative;
+}
+
+.panel-header {
+  text-align: center;
+  letter-spacing: 4px;
+  font-size: 14px;
+  color: #8d949b;
+  margin-bottom: 50px;
+}
+
+.panel-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 60px;
+}
+
+.panel-module {
+  flex: 1;
+  text-align: center;
+}
+
+/* ===== Gauge ===== */
+
+.gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gauge-face {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #111 60%, #000 100%);
+  border: 8px solid #3a4046;
+  position: relative;
+}
+
+.gauge-face::before {
+  content: "";
+  position: absolute;
+  inset: 20px;
+  border-radius: 50%;
+  border: 2px dashed #555;
+}
+
+.gauge-needle {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  width: 3px;
+  height: 90px;
+  background: #9eff00;
+  transform-origin: bottom center;
+  transition: transform 0.4s ease;
+}
+
+.gauge-pivot {
+  width: 14px;
+  height: 14px;
+  background: #333;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.module-label {
+  margin-top: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: #6f767d;
+}
+
+/* ===== CRT Screen ===== */
+
+.crt-module {
+  display: flex;
+  justify-content: center;
+}
+
+.crt-screen {
+  width: 240px;
+  height: 160px;
+  background: #001100;
+  border: 6px solid #1e2226;
+  box-shadow: inset 0 0 40px #00ff0066;
+  position: relative;
+  overflow: hidden;
+}
+
+.scanline {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #00ff00;
+  opacity: 0.2;
+  animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+  from { top: 0; }
+  to { top: 100%; }
+}
+
+.crt-content {
+  color: #00ff66;
+  font-family: monospace;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.crt-value {
+  font-size: 32px;
+  margin-top: 10px;
+}
+
+/* ===== Lever ===== */
+
+.safety-guard {
+  width: 100px;
+  height: 120px;
+  margin: auto;
+  position: relative;
+  background: #1f2328;
+  border: 3px solid #141618;
+}
+
+.glass-cover {
+  position: absolute;
+  inset: 0;
+  background: rgba(255,0,0,0.05);
+  pointer-events: none;
+}
+
+.lever {
+  width: 10px;
+  height: 60px;
+  background: #aaa;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-35deg);
+  transform-origin: bottom center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.lever.on {
+  transform: translateX(-50%) rotate(35deg);
+}
+
+/* ===== Emergency ===== */
+
+.emergency-strip {
+  margin-top: 60px;
+  text-align: center;
+}
+
+.industrial-shutdown {
+  background: #3a0000;
+  border: 3px solid #600;
+  color: #ff4444;
+  padding: 14px 40px;
+  letter-spacing: 3px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.industrial-shutdown:hover {
+  background: #5a0000;
+}
+
+/* ===== Rivets ===== */
+
+.rivet {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #555 40%, #222 100%);
+  position: absolute;
+}
+
+.tl { top: 15px; left: 15px; }
+.tr { top: 15px; right: 15px; }
+.bl { bottom: 15px; left: 15px; }
+.br { bottom: 15px; right: 15px; }

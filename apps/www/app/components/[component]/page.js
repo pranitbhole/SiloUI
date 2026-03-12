@@ -11,7 +11,7 @@ const REGISTRY_META = {
   "status-badge":        { name: "Status Badge",         category: "Badges",   deps: [] },
   "tactical-hex-badge":  { name: "Tactical Hex Badge",   category: "Badges",   deps: [] },
   "reactor-card":        { name: "Reactor Card",         category: "Cards",    deps: [] },
-  "stack-carousel":      { name: "Stack Carousel",       category: "Cards",    deps: ["framer-motion"] },
+  "stack-carousel":      { name: "Stack Carousel",       category: "Cards",    deps: [] },
   "radial-command-menu": { name: "Radial Command Menu",  category: "Menus",    deps: ["framer-motion"] },
   "core-console":        { name: "Core Console",         category: "Panels",   deps: [] },
   "weapon-module-panel": { name: "Weapon Module Panel",  category: "Panels",   deps: [] },
@@ -655,6 +655,143 @@ function WeaponModulePanelPreview() {
   );
 }
 
+// ── StackCarousel Preview ─────────────────────────────────────────────────────
+function StackCarouselPreview() {
+  const initialCards = [
+    { id: 1, variant: "blue", title: "Project Alpha", desc: "Advanced AI research initiative" },
+    { id: 2, variant: "green", title: "Project Beta", desc: "Sustainable energy solutions" },
+    { id: 3, variant: "orange", title: "Project Gamma", desc: "Quantum computing breakthrough" },
+    { id: 4, variant: "blue", title: "Project Delta", desc: "Neural interface development" },
+    { id: 5, variant: "green", title: "Project Epsilon", desc: "Autonomous systems research" }
+  ];
+
+  const [stack, setStack] = useState(initialCards);
+  const [isHovered, setIsHovered] = useState(false);
+
+  useEffect(() => {
+    if (isHovered) return;
+    const timer = setInterval(() => {
+      setStack((prev) => {
+        const updated = [...prev];
+        const first = updated.shift();
+        updated.push(first);
+        return updated;
+      });
+    }, 3000);
+    return () => clearInterval(timer);
+  }, [isHovered]);
+
+  const rotateStack = () => {
+    setStack((prev) => {
+      const updated = [...prev];
+      const first = updated.shift();
+      updated.push(first);
+      return updated;
+    });
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 32, padding: "40px 20px", alignItems: "center" }}>
+      
+      <div 
+        className="stack-container"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        {stack.map((card, index) => (
+          <div
+            key={card.id}
+            className={`stack-card ${card.variant}`}
+            style={{
+              transform: `translateY(${index * 14}px) scale(${1 - index * 0.05})`,
+              opacity: index > 4 ? 0 : 1,
+              zIndex: stack.length - index,
+              transition: "all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)"
+            }}
+            onClick={() => index === 0 && rotateStack()}
+          >
+            <div>
+              <h3 style={{ margin: 0, fontSize: 18, fontWeight: 600, marginBottom: 8 }}>{card.title}</h3>
+              <p style={{ margin: 0, fontSize: 13, opacity: 0.7 }}>{card.desc}</p>
+            </div>
+            <div style={{ fontSize: 11, opacity: 0.5, fontFamily: "var(--font-mono)" }}>
+              {index === 0 ? "Click or hover to pause" : `Card ${index + 1}`}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dim)", textAlign: "center" }}>
+        Auto-rotates every 3 seconds • Click top card or hover to pause
+      </p>
+    </div>
+  );
+}
+
+// ── TacticalHexBadge Preview ──────────────────────────────────────────────────
+function TacticalHexBadgePreview() {
+  const badges = [
+    { label: "NODE A", status: "ONLINE", variant: "info", details: "Primary system node operating at optimal performance." },
+    { label: "NODE B", status: "SECURE", variant: "safe", details: "Security protocols active. All systems encrypted." },
+    { label: "NODE C", status: "WARNING", variant: "warning", details: "Temperature threshold approaching. Monitoring required." },
+    { label: "NODE D", status: "CRITICAL", variant: "critical", details: "System anomaly detected. Immediate attention required." }
+  ];
+
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", gap: 40, padding: "40px 20px", alignItems: "center" }}>
+      
+      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+        {badges.map((badge, i) => (
+          <div key={i} className="hex-wrapper">
+            <div
+              className={`hex-badge ${badge.variant}${badge.variant === "critical" ? " glitch" : ""}`}
+              onClick={() => setOpenIndex(openIndex === i ? null : i)}
+              style={{ cursor: "pointer" }}
+            >
+              <div className="inner-border" />
+              <div className="corner-rotor" />
+              <div className="scan-line" />
+              <div className="hex-content">
+                <span className="hex-label">{badge.label}</span>
+                <span className="hex-status">{badge.status}</span>
+              </div>
+            </div>
+            {openIndex === i && (
+              <div 
+                className="hex-details"
+                style={{
+                  animation: "fadeIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)"
+                }}
+              >
+                {badge.details}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--text-dim)", textAlign: "center" }}>
+        Click hexagons to expand details
+      </p>
+
+      <style jsx>{`
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-5px) scale(0.95);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
 // ── Placeholder Preview ───────────────────────────────────────────────────────
 function PlaceholderPreview({ name }) {
   return (
@@ -674,7 +811,7 @@ function PlaceholderPreview({ name }) {
   );
 }
 
-const PREVIEWS = { "glow-button": GlowButtonPreview, "reactor-button": ReactorButtonPreview, "bomb-timer": BombTimerPreview, "radial-command-menu": RadialCommandMenuPreview, "reactor-card": ReactorCardPreview, "core-console": CoreConsolePreview, "status-badge": StatusBadgePreview, "reactor-badge": ReactorBadgePreview, "control-slider": ControlSliderPreview, "reactor-toggle": ReactorTogglePreview, "weapon-module-panel": WeaponModulePanelPreview };
+const PREVIEWS = { "glow-button": GlowButtonPreview, "reactor-button": ReactorButtonPreview, "bomb-timer": BombTimerPreview, "radial-command-menu": RadialCommandMenuPreview, "reactor-card": ReactorCardPreview, "core-console": CoreConsolePreview, "status-badge": StatusBadgePreview, "reactor-badge": ReactorBadgePreview, "control-slider": ControlSliderPreview, "reactor-toggle": ReactorTogglePreview, "weapon-module-panel": WeaponModulePanelPreview, "stack-carousel": StackCarouselPreview, "tactical-hex-badge": TacticalHexBadgePreview };
 
 // ══════════════════════════════════════════════════════════════════════════════
 // UTILITY COMPONENTS
@@ -733,9 +870,6 @@ export default function ComponentPage() {
   return (
     <div>
       <div className="comp-header">
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-          <Link href="/" className="back-button"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>Back</Link>
-        </div>
         <h1 className="comp-title">{meta.name}</h1>
         <div className="comp-category">Category: <span>{meta.category}</span></div>
       </div>
@@ -785,6 +919,10 @@ export default function ComponentPage() {
       {slug === "reactor-toggle" && <style>{`.reactor-toggle-wrapper{display:flex;align-items:center;gap:20px;margin:25px 0;font-family:var(--font-geist)}.toggle-label{font-size:16px;letter-spacing:1px;color:rgba(255,255,255,.7);transition:all .3s ease}.toggle-label.active{color:var(--color);text-shadow:0 0 10px var(--color)}.reactor-toggle{position:relative;width:90px;height:40px;border-radius:40px;background:rgba(255,255,255,.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.1);cursor:pointer;overflow:hidden;transition:all .4s ease}.reactor-toggle.active{border-color:var(--color);box-shadow:0 0 20px rgba(0,255,170,.2),inset 0 0 10px rgba(0,0,0,.6)}.toggle-energy{position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.05),transparent);opacity:0;z-index:0;transition:opacity .3s ease}.reactor-toggle.active .toggle-energy{opacity:1;animation:energyFlow 2s linear infinite}@keyframes energyFlow{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}.toggle-sweep{position:absolute;inset:0;background:linear-gradient(120deg,transparent 20%,rgba(255,255,255,.25),transparent 80%);transform:translateX(-100%);z-index:0}.reactor-toggle.active .toggle-sweep{animation:sweepMove 3s ease-in-out infinite}@keyframes sweepMove{0%{transform:translateX(-100%)}50%{transform:translateX(120%)}100%{transform:translateX(120%)}}.toggle-status{position:absolute;top:50%;transform:translateY(-50%);font-size:11px;letter-spacing:1.5px;font-weight:600;pointer-events:none;transition:opacity .3s ease,color .4s ease,text-shadow .5s ease;z-index:1}.on-text{left:10px;color:var(--color);opacity:0;text-shadow:0 0 0 transparent}.off-text{right:10px;color:rgba(255,255,255,.55);opacity:1;text-shadow:0 0 0 transparent}.reactor-toggle.active .on-text{opacity:1;transition-delay:.15s;text-shadow:0 0 4px var(--color),0 0 8px var(--color),0 0 14px rgba(0,255,170,.2)}.reactor-toggle.active .off-text{opacity:0;transition-delay:0s}.reactor-toggle::after{content:"";position:absolute;top:4px;left:4px;width:32px;height:32px;border-radius:50%;backdrop-filter:blur(6px)saturate(140%);background:rgba(255,255,255,.08);box-shadow:inset 0 0 8px rgba(255,255,255,.2),inset 0 0 14px rgba(255,255,255,.15);z-index:2;pointer-events:none;transition:transform .4s cubic-bezier(.34,1.56,.64,1)}.reactor-toggle.active::after{transform:translateX(50px)}.toggle-core{position:absolute;top:4px;left:4px;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#fff,#bdbdbd);box-shadow:0 4px 10px rgba(0,0,0,.5),inset 0 2px 6px rgba(255,255,255,.4);transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:3}.reactor-toggle.active .toggle-core{transform:translateX(50px);background:radial-gradient(circle at 30% 30%,var(--color),#006b4a);box-shadow:0 0 15px var(--color),0 4px 10px rgba(0,0,0,.6)}`}</style>}
       
       {slug === "weapon-module-panel" && <style>{`.weapon-panel{width:700px;padding:30px;border-radius:16px;background:linear-gradient(145deg,#1b2229,#0f1419);box-shadow:0 40px 100px rgba(0,0,0,.9),inset 0 0 40px rgba(255,255,255,.02);color:#e4e9ef;font-family:var(--font-geist);position:relative;overflow:hidden}.weapon-panel::after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 60%,rgba(255,255,255,.02));animation:flicker 8s infinite;pointer-events:none}@keyframes flicker{0%,100%{opacity:.1}50%{opacity:.2}}.weapon-header h2{font-size:18px;letter-spacing:2px;margin:0;font-family:var(--font-mono)}.weapon-sub{font-size:10px;opacity:.6;letter-spacing:1px;margin-top:4px}.module-grid{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}.module-card{width:155px;height:100px;border-radius:12px;background:linear-gradient(145deg,#2a3138,#161c21);border:1px solid rgba(255,255,255,.05);position:relative;cursor:pointer;overflow:hidden;transition:.3s ease;box-shadow:0 20px 40px rgba(0,0,0,.7)}.module-card:hover{box-shadow:0 25px 60px rgba(0,150,255,.25);transform:translateY(-4px)}.module-card.active{border:1px solid rgba(0,180,255,.4);box-shadow:0 0 40px rgba(0,180,255,.4)}.module-glass{position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.01));backdrop-filter:blur(10px)}.module-content{position:relative;padding:14px;z-index:2}.module-title{font-size:13px;font-weight:600}.module-type{font-size:10px;opacity:.6;margin-top:2px}.module-led{position:absolute;bottom:10px;right:10px;width:8px;height:8px;border-radius:50%;background:#0af;box-shadow:0 0 12px #0af;opacity:0;transition:.3s ease}.module-card.active .module-led{opacity:1}.stats-panel{margin-top:32px;background:linear-gradient(145deg,#141a20,#0e1317);padding:20px;border-radius:12px;box-shadow:inset 0 0 25px rgba(0,0,0,.7)}.stat-row{display:flex;align-items:center;margin-bottom:12px;gap:12px}.stat-label{width:100px;font-size:11px;opacity:.7;font-family:var(--font-mono)}.stat-bar{flex:1;height:8px;background:#0d1116;border-radius:6px;overflow:hidden;box-shadow:inset 0 0 10px rgba(0,0,0,.8)}.stat-fill{height:100%;background:linear-gradient(90deg,#00b4ff,#0078ff);box-shadow:0 0 12px rgba(0,180,255,.6);transition:width .4s cubic-bezier(.34,1.56,.64,1)}.stat-value{width:35px;text-align:right;font-size:11px}`}</style>}
+      
+      {slug === "stack-carousel" && <style>{`.stack-container{position:relative;width:380px;height:280px}.stack-card{position:absolute;width:100%;height:200px;border-radius:18px;padding:20px;backdrop-filter:blur(14px);background:rgba(15,20,25,.8);box-shadow:0 20px 50px rgba(0,0,0,.6),inset 0 0 0 1px rgba(255,255,255,.06);color:#e4e7eb;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;cursor:pointer;transition:all .4s cubic-bezier(.34,1.56,.64,1)}.stack-card::after{content:"";position:absolute;inset:0;border-radius:18px;background:linear-gradient(120deg,rgba(255,255,255,.12),transparent 40%);opacity:.15;pointer-events:none}.stack-card.blue{background:linear-gradient(135deg,rgba(40,80,180,.6),rgba(10,20,40,.9))}.stack-card.green{background:linear-gradient(135deg,rgba(40,180,120,.6),rgba(10,25,20,.9))}.stack-card.orange{background:linear-gradient(135deg,rgba(255,140,80,.6),rgba(30,15,10,.9))}`}</style>}
+      
+      {slug === "tactical-hex-badge" && <style>{`.hex-wrapper{display:flex;flex-direction:column;align-items:center;gap:14px}.hex-badge{width:180px;height:104px;position:relative;cursor:pointer;clip-path:polygon(25% 0%,75% 0%,100% 50%,75% 100%,25% 100%,0% 50%);background:linear-gradient(145deg,rgba(20,30,40,.95),rgba(8,12,16,.95));display:flex;align-items:center;justify-content:center;overflow:hidden;will-change:transform;transition:transform .25s ease}.hex-badge:hover{transform:translateY(-6px)}.inner-border{position:absolute;inset:6px;clip-path:inherit;border:1px solid currentColor;opacity:.4;filter:blur(1px);pointer-events:none}.hex-badge.info{color:#3d8bff}.hex-badge.safe{color:#2a8f55}.hex-badge.warning{color:#f08a3c}.hex-badge.critical{color:#ff4d4d}.glitch{animation:flicker 1.5s infinite}@keyframes flicker{0%{opacity:1}5%{opacity:.6}10%{opacity:1}15%{opacity:.7}20%{opacity:1}100%{opacity:1}}.hex-content{text-align:center;z-index:2}.hex-label{display:block;font-size:13px;font-weight:600;letter-spacing:1px;color:#e4e7eb}.hex-status{font-size:11px;opacity:.7;letter-spacing:1px;color:#e4e7eb}.scan-line{position:absolute;top:-60%;left:0;width:100%;height:60%;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.18),transparent);pointer-events:none;will-change:transform;animation:scan 2.8s linear infinite}@keyframes scan{0%{transform:translateY(-120%)}100%{transform:translateY(220%)}}.corner-rotor{position:absolute;width:220%;height:220%;border:1px dashed currentColor;border-radius:50%;opacity:.06;animation:rotate 14s linear infinite}@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}.hex-details{width:220px;padding:16px;border-radius:12px;background:rgba(15,20,25,.95);border:1px solid rgba(255,255,255,.06);font-size:12px;color:#cfd8e3;backdrop-filter:blur(12px);will-change:transform,opacity;line-height:1.6}`}</style>}
     </div>
   );
-}
+} 
